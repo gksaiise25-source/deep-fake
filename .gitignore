@@ -1,0 +1,46 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Data
+data/
+*.pkl
+*.joblib
+*.model
+
+# Outputs
+outputs/
+results.json
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/streamlit_cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
