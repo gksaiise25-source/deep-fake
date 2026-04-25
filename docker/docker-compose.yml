@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  verifaceai-ui:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../models:/app/models
+      - ../data:/app/data
+      - verifaceai-db:/app
+    environment:
+      - DEMO_MODE=true
+      - DATABASE_URL=sqlite:////app/verifaceai.db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  verifaceai-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../models:/app/models
+      - verifaceai-db:/app
+    environment:
+      - DEMO_MODE=true
+      - DATABASE_URL=sqlite:////app/verifaceai.db
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+
+volumes:
+  verifaceai-db:
